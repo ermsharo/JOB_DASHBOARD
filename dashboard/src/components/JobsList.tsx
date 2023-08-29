@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,10 +6,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AlarmIcon from '@mui/icons-material/Alarm';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
 type JobListing = {
     apply: boolean;
     company: string;
@@ -28,41 +25,6 @@ type JobListing = {
 };
 
 
-function createData(
-    JobListing: JobListing
-) {
-
-    const {
-        apply,
-        company,
-        company_link,
-        date,
-        description,
-        id,
-        insights,
-        job_type,
-        language,
-        link,
-        location,
-        title,
-        valid
-    } = JobListing;
-    return {
-        apply,
-        company,
-        company_link,
-        date,
-        description,
-        id,
-        insights,
-        job_type,
-        language,
-        link,
-        location,
-        title,
-        valid
-    };
-}
 
 const MarkedDisplay = (status: boolean) => {
     if (status) {
@@ -80,7 +42,7 @@ const ValidDisplay = (status: boolean) => {
 
 
 export default function BasicTable({ data }: { data: any }) {
-    const { job_records, total_pages } = data;
+    const { job_records } = data;
     console.log("Data here", data)
     return (
         <TableContainer component={Paper}>
@@ -102,18 +64,12 @@ export default function BasicTable({ data }: { data: any }) {
                     {job_records.map(({
                         apply,
                         company,
-                        company_link,
-                        date,
-                        description,
                         id,
-                        insights,
                         job_type,
                         language,
-                        link,
-                        location,
                         title,
                         valid
-                    }) => (
+                    } : JobListing) => (
                         <TableRow
                             key={id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

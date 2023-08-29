@@ -4,8 +4,15 @@ import JobsList from "./../components/JobsList";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import React, { useState } from 'react';
+import styled from "styled-components";
 
 
+const PaginationBox = styled.div`
+padding: 2rem 1rem;
+display: flex;
+justify-content: end;
+
+`
 
 
 
@@ -16,14 +23,15 @@ function JobsListData() {
     // Change handler for pagination
     const handlePageChange = (event: any, newPage: any) => {
         setCurrentPage(newPage);
+        refetchData();
 
     };
 
 
 
 
-    const { data, isLoading } = DefaultRequest<any>({
-        url: `http://127.0.0.1:5000/jobs`,
+    const { data, isLoading, refetchData  } = DefaultRequest<any>({
+        url: `http://localhost:5000/jobs?page=${currentPage}&per_page=10`,
     });
 
     if (isLoading) {
@@ -36,15 +44,15 @@ function JobsListData() {
         return (
             <div>
                 <JobsList data={data} />
-                <div>
+                <PaginationBox>
                     {/* Your content goes here */}
                     <Pagination
-                        count={10} // Total number of pages
+                        count={data.total_pages} // Total number of pages
                         page={currentPage} // Current selected page
                         onChange={handlePageChange} // Handler function for page change
                         shape="rounded"
                     />
-                </div>
+                </PaginationBox>
             </div>
         );
     }
