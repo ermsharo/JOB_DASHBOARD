@@ -7,6 +7,7 @@ import {
   Link,
   Router,
 } from "react-router-dom";
+import DisplayJob from "./components/DisplayJob"
 import Header from "./components/header"
 import JobsList from "./components/JobsList"
 import JobsData from './dataServices/jobsData'
@@ -31,7 +32,7 @@ function App() {
       <DashboardBox>      <BrowserRouter basename="/">
         <Routes>
           <Route path="/pt" element={<JobsData />} />
-          <Route path="/" element={<JobsData />} />
+          <Route path="/" element={<DisplayJob />} />
           <Route path="/jobs" element={<JobsData />} />
           {/* 👈 Renders at /app/ */}
         </Routes>
