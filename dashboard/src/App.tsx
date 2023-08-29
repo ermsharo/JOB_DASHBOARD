@@ -8,11 +8,13 @@ margin: auto;
 padding: 1rem; 
 display: flex;
 justify-content: center;
+padding-top: 3rem;
 
 `
 
 import Header from "./components/header"
-import JobsList from "./components/Jobs_list"
+import JobsList from "./components/JobsList"
+import JobsData from './dataServices/jobsData'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,7 +23,8 @@ function App() {
     <>
       <Header />
       <DashboardBox>
-      <JobsList/>
+      {/* <JobsList/> */}
+      <JobsData />
       </DashboardBox>
   
     </>
