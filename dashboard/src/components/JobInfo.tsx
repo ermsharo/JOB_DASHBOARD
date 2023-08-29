@@ -1,12 +1,5 @@
 
-import { DefaultRequest } from "../services/request";
-import JobsList from "./../components/JobsList";
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import React, { useRef, useState } from 'react';
 import styled from "styled-components";
-import Iframe from 'react-iframe'
-import IframeResizer from 'iframe-resizer-react'
 import { Paper, Typography } from "@mui/material";
 
 const JobInfo = styled.div`
@@ -61,13 +54,13 @@ function JobsInfo() {
             <div><Typography variant="h3">
                 {title}
             </Typography></div>
-<DisplayJob>     <TextInfo>       <Description>
+            <DisplayJob>     <TextInfo>       <Description>
                 <Typography variant="h6" component="h6">
                     {description}
                 </Typography>
             </Description></TextInfo></DisplayJob>
 
-       
+
         </JobInfo>  </Paper>
     );
 

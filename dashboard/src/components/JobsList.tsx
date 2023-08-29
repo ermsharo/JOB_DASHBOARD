@@ -69,7 +69,7 @@ export default function BasicTable({ data }: { data: any }) {
                         language,
                         title,
                         valid
-                    } : JobListing) => (
+                    }: JobListing) => (
                         <TableRow
                             key={id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
