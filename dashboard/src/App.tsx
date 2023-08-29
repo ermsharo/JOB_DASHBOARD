@@ -1,5 +1,15 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  Router,
+} from "react-router-dom";
+import Header from "./components/header"
+import JobsList from "./components/JobsList"
+import JobsData from './dataServices/jobsData'
 
 
 const DashboardBox = styled.div`
@@ -12,23 +22,26 @@ padding-top: 3rem;
 
 `
 
-import Header from "./components/header"
-import JobsList from "./components/JobsList"
-import JobsData from './dataServices/jobsData'
-
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
       <Header />
-      <DashboardBox>
-      {/* <JobsList/> */}
-      <JobsData />
-      </DashboardBox>
-  
+      <DashboardBox>      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/pt" element={<JobsData />} />
+          <Route path="/" element={<JobsData />} />
+          <Route path="/jobs" element={<JobsData />} />
+          {/* 👈 Renders at /app/ */}
+        </Routes>
+      </BrowserRouter></DashboardBox>
+
     </>
-  )
+  );
+
+
 }
+
 
 export default App
