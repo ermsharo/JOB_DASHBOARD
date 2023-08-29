@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import styled from 'styled-components'
 
 
-const DashboardBox = styled.button`
+const DashboardBox = styled.div`
 width: 60vw;
 margin: auto; 
 padding: 1rem; 
+display: flex;
+justify-content: center;
 
 `
 
