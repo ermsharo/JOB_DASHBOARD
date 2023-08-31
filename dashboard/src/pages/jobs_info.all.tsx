@@ -1,6 +1,5 @@
 
 import styled from "styled-components";
-import { Button, Paper, Stack, Typography } from "@mui/material";
 import Header from "./../components/header";
 import JobsData from "../dataServices/jobsData";
 

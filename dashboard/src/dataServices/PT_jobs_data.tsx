@@ -17,7 +17,11 @@ justify-content: end;
 
 function JobsListData() {
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
+
+    //Maximum page
+
+    //go to next page
 
     // Change handler for pagination
     const handlePageChange = (event: any, newPage: any) => {
