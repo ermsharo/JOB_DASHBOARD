@@ -1,6 +1,6 @@
 
 import styled from "styled-components";
-import { Paper, Typography } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 
 const JobInfo = styled.div`
 padding: 3rem 3rem;
@@ -10,11 +10,11 @@ padding: 3rem 3rem;
 
 const Description = styled.div`
 
-
+font-size: 1.2rem;
 `
 
 const TextInfo = styled.div`
-
+padding: 1rem 0;
 
 
 `
@@ -27,7 +27,11 @@ grid-row-gap: 2rem;
 
 `
 
+const OptionsGroup = styled.div`
+padding: 3rem 1rem;
 
+
+`;
 
 let data = {
     "apply": false,
@@ -54,11 +58,41 @@ function JobsInfo() {
             <div><Typography variant="h3">
                 {title}
             </Typography></div>
+            <div>
+
+                <Stack direction="row" spacing={2}>
+                    <Typography variant="h4">
+                        Empresa: {company}
+
+                    </Typography>
+
+
+                    <Button variant="contained" color="error">
+                        Bloquear empresa
+                    </Button>
+                </Stack>
+            </div>
             <DisplayJob>     <TextInfo>       <Description>
-                <Typography variant="h6" component="h6">
-                    {description}
-                </Typography>
-            </Description></TextInfo></DisplayJob>
+
+                <strong>Descrição :</strong> <br /> <Description> {description}</Description>
+
+            </Description></TextInfo>
+                <OptionsGroup>
+                    <Stack direction="column" spacing={3}>
+                    <Button variant="contained" color="primary" fullWidth>
+                            Acessar vaga
+                        </Button>
+
+                        <Button variant="contained" color="success" fullWidth>
+                            Vaga aplicada
+                        </Button>
+                        <Button variant="contained" color="error" fullWidth>
+                            Remover vaga
+                        </Button>
+                    </Stack>
+
+                </OptionsGroup>
+            </DisplayJob>
 
 
         </JobInfo>  </Paper>

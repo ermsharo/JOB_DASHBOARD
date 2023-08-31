@@ -2,8 +2,7 @@
 import { DefaultRequest } from "../services/request";
 import JobsList from "./../components/JobsList";
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from "styled-components";
 
 
