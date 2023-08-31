@@ -26,9 +26,7 @@ function App() {
   return (
     <>
      
-      <DashboardBox>      
-
-      </DashboardBox>
+  
 
     </>
   );

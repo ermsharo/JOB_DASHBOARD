@@ -34,13 +34,23 @@ padding: 3rem 1rem;
 
 `;
 
+const DashboardBox = styled.div`
+padding: 3rem 3rem;
+width: 80vw;
+margin: auto;
+
+
+`
+
+
 
 
 function JobsInfo_pt() {
 
     return (
 <><Header/>
-<JobsInfo/>
+<DashboardBox><JobsInfo/></DashboardBox>
+
 </>
 
     );

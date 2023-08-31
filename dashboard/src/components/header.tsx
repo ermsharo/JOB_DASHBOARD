@@ -16,6 +16,11 @@ const pages = [
 const Links = styled.div`
 padding: 2rem 1rem;
 
+a{
+    text-decoration: none;  
+    color: white;
+}
+
 
 `
 
@@ -51,7 +56,15 @@ function ResponsiveAppBar() {
                     {pages.map((page) => (
                         <Links key={page.name} >
 
-                            <Link to={page.path}>{page.name}</Link>
+                            <Link to={page.path}>
+
+                                <Typography
+                                    variant="h6"
+
+                                >       {page.name}
+                                </Typography>
+
+                            </Link>
                         </Links>
                     ))}
 

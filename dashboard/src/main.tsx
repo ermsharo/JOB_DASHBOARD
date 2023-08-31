@@ -8,7 +8,7 @@ import App from './App.tsx'
 import './index.css'
 import Jobs_pt from "./pages/jobs_pt.tsx";
 import Jobs_en from "./pages/jobs_en.tsx"; 
-import Jobs_info from "./pages/jobs_info.all.tsx"; 
+import Jobs_info_all from "./pages/jobs_info.all.tsx"; 
 
 const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/all",
-    element: <Jobs_info />,
+    element: <Jobs_info_all />,
   },
 ]);
 
