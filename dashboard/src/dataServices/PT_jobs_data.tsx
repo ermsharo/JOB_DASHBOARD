@@ -17,7 +17,7 @@ justify-content: end;
 
 function JobsListData() {
 
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
     //Maximum page
 
@@ -34,7 +34,7 @@ function JobsListData() {
 
 
     const { data, isLoading, refetchData  } = DefaultRequest<any>({
-        url: `http://localhost:5000/jobs?page=${currentPage}&per_page=10`,
+        url: `http://localhost:5000/jobs_by_language?page=${currentPage}&per_page=10`,
     });
 
     if (isLoading) {

@@ -1,104 +1,187 @@
-
-import styled from "styled-components";
-import { Button, Paper, Stack, Typography } from "@mui/material";
+import styled from 'styled-components';
+import { Button, Paper, Stack, Typography } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import { postData } from '../services/request';
+import TechTags from "../components/techTags";
+import { useEffect } from 'react';
 
 const JobInfo = styled.div`
-padding: 3rem 3rem;
+	padding: 3rem 3rem;
 
-
-`
-
-const Description = styled.div`
-
-font-size: 1.2rem;
-`
-
-const TextInfo = styled.div`
-padding: 1rem 0;
-
-
-`
-const DisplayJob = styled.div`
-
-display: grid;
-grid-template-columns: 1fr 1fr;
-grid-column-gap: 1rem;
-grid-row-gap: 2rem;
-
-`
-
-const OptionsGroup = styled.div`
-padding: 3rem 1rem;
-
-
+	max-height: 50vh;
+	height: 50vh;
+	overflow: hidden;
 `;
 
-let data = {
-    "apply": false,
-    "company": "Movere Software",
-    "company_link": " - ",
-    "date": " - ",
-    "description": "About the job\n\nEstamos em busca de um Coordenador de Suporte que seja apaixonado e obcecado pelo sucesso do cliente; para alavancar o crescimento da empresa. Buscamos uma pessoa para coordenar o time de atendimento; treinando; supervisionando e melhorando o time continuamente. Também esperamos que este profissional lide com os donos e diretores de pequenas e médias empresas.\n\nO Coordenador de Suporte tem um papel fundamental na garantia da satisfação do cliente; na resolução de problemas técnicos e no desenvolvimento contínuo das melhores práticas da equipe.\n\n\n\n\nResponsabilidades\n\nAcompanhamento e priorização de atendimentos ao cliente\n\nRealização de comunicação ativa com os clientes\n\nGestão de pessoas e formação de time: contratação; feedback e treinamento de analistas de helpdesk\n\nAcompanhamento de indicadores dos times e individuais (FCR; SLA; Satisfação; Tempo médio de solução)\n\nManutenção e configuração das ferramentas de gestão de tickets (Freshdesk; Movidesk)\n\n\n\n\nQualificações\n\nExperiencia mínima de 1 ano coordenando time de suporte \n\nConhecimento de sistemas; softwares e soluções ERP\n\nSatisfação em conversar com os proprietários ou diretores de pequenas e médias empresas\n\nExperiência em atendimento ao cliente\n\nCapacidade de adaptação e jogo de cintura\n\n\n\n\nContratação é CLT Full + benefícios\n\nHorário de trabalho flexível\n\nA vaga é para Cuiabá-MT e atenderá clientes no Brasil inteiro",
-    "id": 3680318273,
-    "insights": "Full-time11-50 employeesSkills: Enterprise Resource Planning (ERP); Freshdesk; +1 moreJob poster joined LinkedIn in 2011",
-    "job_type": "REMOTE",
-    "language": "pt",
-    "link": "https://www.linkedin.com/jobs/view/3703660637/",
-    "location": " - ",
-    "title": "Coordenador de suporte",
-    "valid": true
-}
+const Description = styled.div`
+	font-size: 1.2rem;
+	overflow: auto;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+`;
 
-const { apply, company, company_link, date, description, id, insights, job_type, link, title } = data
+const TextInfo = styled.div`padding: 1rem 0;`;
+const DisplayJob = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 1rem;
+	grid-row-gap: 2rem;
+`;
 
-function JobsInfo() {
+const OptionsGroup = styled.div`padding: 3rem 1rem;`;
 
-    return (
-        <Paper elevation={3} >        <JobInfo>
-            <div><Typography variant="h3">
-                {title}
-            </Typography></div>
-            <div>
+function JobsInfo({ data }: { data: any }) {
+	const {
+		apply,
+		company,
+		company_link,
+		date,
+		description,
+		id,
+		insights,
+		job_type,
+		link,
+		title,
+		expired,
+	} = data.job_records[0];
 
-                <Stack direction="row" spacing={2}>
-                    <Typography variant="h4">
-                        Empresa: {company}
-
-                    </Typography>
-
-
-                    <Button variant="contained" color="error">
-                        Bloquear empresa
-                    </Button>
-                </Stack>
-            </div>
-            <DisplayJob>     <TextInfo>       <Description>
-
-                <strong>Descrição :</strong> <br /> <Description> {description}</Description>
-
-            </Description></TextInfo>
-                <OptionsGroup>
-                    <Stack direction="column" spacing={3}>
-                    <Button variant="contained" color="primary" fullWidth>
-                            Acessar vaga
-                        </Button>
-
-                        <Button variant="contained" color="success" fullWidth>
-                            Vaga aplicada
-                        </Button>
-                        <Button variant="contained" color="error" fullWidth>
-                            Remover vaga
-                        </Button>
-                    </Stack>
-
-                </OptionsGroup>
-            </DisplayJob>
+	const invalidateJob = async () => {
+		let body = {
+			id: id
+		};
+		console.log("Body here", body)
+		let url = 'http://127.0.0.1:5000/remove';
+		if (await postData(body, url)) {
+			console.log("Deu certo")
+		} else {
+			console.log("Deu errado")
+		}
+	};
 
 
-        </JobInfo>  </Paper>
-    );
+	function cacheAndSyncData(key, data) {
+		// Cache information
+		localStorage.setItem(key, data);
 
+		// Listen for changes in storage (synchronize across tabs)
+		window.addEventListener('storage', function (event) {
+			if (event.key === key) {
+				// Handle the event and update the data in this tab
+				const updatedData = event.newValue;
+				console.log(`Cached data (${key}) updated:`, updatedData);
+
+				// You can also trigger a callback function here to react to changes
+			}
+		});
+
+		// Access cached information
+		const cachedData = localStorage.getItem(key);
+		console.log(`Cached data (${key}):`, cachedData);
+
+		// Return the cached data, if needed
+		return cachedData;
+	}
+
+	const applyJob = async () => {
+		let body = {
+			id: id
+		};
+		console.log("Body here", body)
+		let url = 'http://127.0.0.1:5000/apply';
+		if (await postData(body, url)) {
+			console.log("Deu certo")
+		} else {
+			console.log("Deu errado")
+		}
+	};
+
+
+
+	const acessJob = () => {
+		window.open(link, '_blank');
+	};
+
+	useEffect(() => {
+		// Define your function to make the request here.
+		const updateWindow = async () => {
+			let body = {
+				url: link
+			};
+			console.log("Body here", body)
+			let url = 'http://localhost:3000/set_url';
+			if (await postData(body, url)) {
+				console.log("Deu certo")
+			} else {
+				console.log("Deu errado")
+			}
+		};
+		console.log("Run here")
+
+
+
+		// Call the fetchData function whenever yourState changes.
+		return updateWindow();
+	}, []);
+
+
+
+	const cachedData = cacheAndSyncData('myCachedData', link);
+	return (
+		<Paper elevation={3}>
+			{' '}
+			<JobInfo>
+				<div>
+					<Stack direction="row" spacing={1}>
+						<Typography variant="h4">{title}</Typography>
+						<Chip label={job_type} color="primary" />
+						{(expired) && <Chip label="Expirada" color="error" />}
+					</Stack>
+				</div>
+				<div>
+					<Stack direction="row" spacing={2}>
+						<Typography variant="h5">Empresa: {company}</Typography>
+
+						<Button variant="contained" color="error">
+							Bloquear empresa
+						</Button>
+					</Stack>
+				</div>
+				<DisplayJob>
+					{' '}
+					<TextInfo>
+						{' '}
+						<Description>
+							<strong>Descrição :</strong> <br /> <Description> {description}</Description>
+						</Description>
+					</TextInfo>
+					<OptionsGroup>
+						<div>
+							<Typography variant="h5">Keywords: </Typography>
+							<TechTags description={description} /></div>
+						<Stack direction="column" spacing={3}>
+							<Button
+								variant="contained"
+								onClick={() => {
+									acessJob();
+								}}
+								color="primary"
+								fullWidth
+							>
+								Acessar vaga
+							</Button>
+
+							<Button variant="contained" onClick={async () => { await applyJob() }} color="success" fullWidth>
+								Vaga aplicada
+							</Button>
+							<Button variant="contained" onClick={async () => { await invalidateJob() }} color="error" fullWidth>
+								Remover vaga
+							</Button>
+						</Stack>
+					</OptionsGroup>
+				</DisplayJob>
+			</JobInfo>{' '}
+		</Paper>
+	);
 }
 
 export default JobsInfo;
-

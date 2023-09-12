@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Embedded Configurations</title>
+  <title>Independent Iframe</title>
 </head>
 <body>
-    <h1>Embedded Configurations</h1>
-    <object data="https://www.linkedin.com/jobs/view/3703660637"
-    width="400"
-    height="300"
-    type="text/html">
-        Alternative Content
-    </object>
+  <button id="openIframe">Open Independent Iframe</button>
+  <div id="iframeContainer"></div>
+
+  <script>
+    // Function to create and open a new iframe
+    function openIndependentIframe(url) {
+      // Create a new iframe element
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.style.width = '100%';
+      iframe.style.height = '500px'; // Set the desired height
+
+      // Add the iframe to a container div
+      const container = document.getElementById('iframeContainer');
+      container.innerHTML = '';
+      container.appendChild(iframe);
+    }
+
+    // Button click event handler to open the iframe
+    const openIframeButton = document.getElementById('openIframe');
+    openIframeButton.addEventListener('click', function() {
+      const url = 'https://www.linkedin.com/jobs/view/3694207551/?eBP=CwEAAAGKGzWbOPzdqr-eelw0h02H3aGnpcoMmpoU6B83JWfzwUJfIqhScXlSHjAnWf3Mdc4pIlOe0_RqosDBBNTXTXLuwQGEo2_jRK9zu0STaTzVZwGWCyMDq7xuOX2ah1cHJtoPyW6gPmADLmBK7_T-zM9SBz8MtUWikAJQl9J_DUdcriFEaSpSNr-OHyo2P-AcQ6mTkGrAKjtdRdHIQADP7r7nx4RCSsdXzC0ccEU7tc1shOHuw-IHGtSj8sCpMbnshm3LWrovZblodTRYNUrPiC5P6W7WQUvIB6kWUrxwZUOvVvjWiXpPwlreR4GkGpzM8tzU6BTpCQaIXm34kuBPtoich9q6lEQWMN0oFTIQtO_4eIteTGW6YUqWGkJTqGZ0HPoHILA&refId=q7HE2X77d6PQHIdqQvkOOw%3D%3D&trackingId=wU6rw0TMYJCA2SC9fTwZ1w%3D%3D&trk=flagship3_search_srp_jobs'; // Replace with the URL you want to open
+      openIndependentIframe(url);
+    });
+  </script>
+</body>
 </html>
