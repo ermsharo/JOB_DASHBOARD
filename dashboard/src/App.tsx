@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import DisplayJob from "./components/DisplayJob"
 import Header from "./components/header"
-import JobsData from './dataServices/jobsData'
+import JobsData from './dataServices/jobsData_pt'
 
 
 const DashboardBox = styled.div`

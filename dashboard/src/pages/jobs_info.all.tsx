@@ -1,7 +1,7 @@
 
 import styled from "styled-components";
 import Header from "./../components/header";
-import JobsData from "../dataServices/jobsData";
+import JobsData from "../dataServices/jobsData_pt";
 
 
 const DashboardBox = styled.div`

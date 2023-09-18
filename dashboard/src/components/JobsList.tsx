@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { postData } from '../services/request';
 
 type JobListing = {
     apply: boolean;
@@ -39,6 +40,22 @@ const ValidDisplay = (status: boolean) => {
     }
     return <>❌</>
 }
+
+
+const invalidateJob = async (id: number) => {
+    let body = {
+        id: id
+    };
+    console.log("Body here", body)
+    let url = 'http://127.0.0.1:5000/remove';
+    if (await postData(body, url)) {
+        console.log("Deu certo")
+    } else {
+        console.log("Deu errado")
+    }
+
+};
+
 
 
 export default function BasicTable({ data }: { data: any }) {
@@ -79,9 +96,8 @@ export default function BasicTable({ data }: { data: any }) {
                             <TableCell align="right">{company}</TableCell>
                             <TableCell align="right">{job_type}</TableCell>
                             <TableCell align="right">{language}</TableCell>
-                            <TableCell>{MarkedDisplay(apply)}</TableCell>
-                            <TableCell align="right">{ValidDisplay(valid)}</TableCell>
-                            <TableCell align="right"> <IconButton aria-label="delete">
+                            <TableCell align="center"><>Aplicar</></TableCell>
+                            <TableCell align="right"> <IconButton aria-label="delete" onClick={async () => { await invalidateJob() }}>
                                 <DeleteIcon />
                             </IconButton></TableCell>
 

@@ -3,7 +3,9 @@ import { Button, Paper, Stack, Typography } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { postData } from '../services/request';
 import TechTags from "../components/techTags";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import CustomSnack from './CustomSnack';
+
 
 const JobInfo = styled.div`
 	padding: 3rem 3rem;
@@ -31,157 +33,147 @@ const DisplayJob = styled.div`
 const OptionsGroup = styled.div`padding: 3rem 1rem;`;
 
 function JobsInfo({ data }: { data: any }) {
-	const {
-		apply,
-		company,
-		company_link,
-		date,
-		description,
-		id,
-		insights,
-		job_type,
-		link,
-		title,
-		expired,
-	} = data.job_records[0];
 
-	const invalidateJob = async () => {
-		let body = {
-			id: id
+
+	const [openSnack, setOpenSnack] = useState(false);
+	// const {
+	// 	apply,
+	// 	company,
+	// 	company_link,
+	// 	date,
+	// 	description,
+	// 	id,
+	// 	insights,
+	// 	job_type,
+	// 	link,
+	// 	title,
+	// 	expired,
+	// } = data.job_records[0];
+
+
+
+
+
+
+
+
+
+	if (data.job_records.length > 0) {
+
+		const acessJob = () => {
+			window.open(link, '_blank');
 		};
-		console.log("Body here", body)
-		let url = 'http://127.0.0.1:5000/remove';
-		if (await postData(body, url)) {
-			console.log("Deu certo")
-		} else {
-			console.log("Deu errado")
-		}
-	};
 
-
-	function cacheAndSyncData(key, data) {
-		// Cache information
-		localStorage.setItem(key, data);
-
-		// Listen for changes in storage (synchronize across tabs)
-		window.addEventListener('storage', function (event) {
-			if (event.key === key) {
-				// Handle the event and update the data in this tab
-				const updatedData = event.newValue;
-				console.log(`Cached data (${key}) updated:`, updatedData);
-
-				// You can also trigger a callback function here to react to changes
-			}
-		});
-
-		// Access cached information
-		const cachedData = localStorage.getItem(key);
-		console.log(`Cached data (${key}):`, cachedData);
-
-		// Return the cached data, if needed
-		return cachedData;
-	}
-
-	const applyJob = async () => {
-		let body = {
-			id: id
-		};
-		console.log("Body here", body)
-		let url = 'http://127.0.0.1:5000/apply';
-		if (await postData(body, url)) {
-			console.log("Deu certo")
-		} else {
-			console.log("Deu errado")
-		}
-	};
-
-
-
-	const acessJob = () => {
-		window.open(link, '_blank');
-	};
-
-	useEffect(() => {
-		// Define your function to make the request here.
-		const updateWindow = async () => {
+		const applyJob = async () => {
 			let body = {
-				url: link
+				id: id
 			};
 			console.log("Body here", body)
-			let url = 'http://localhost:3000/set_url';
+			let url = 'http://127.0.0.1:5000/apply';
 			if (await postData(body, url)) {
 				console.log("Deu certo")
 			} else {
 				console.log("Deu errado")
 			}
+
+			setOpenSnack(true);
 		};
-		console.log("Run here")
+
+		const invalidateJob = async () => {
+			let body = {
+				id: id
+			};
+			console.log("Body here", body)
+			let url = 'http://127.0.0.1:5000/remove';
+			if (await postData(body, url)) {
+				console.log("Deu certo")
+			} else {
+				console.log("Deu errado")
+			}
+			setOpenSnack(true);
+		};
 
 
 
-		// Call the fetchData function whenever yourState changes.
-		return updateWindow();
-	}, []);
+		console.log("Size here ", data.job_records.length)
+		const {
+			apply,
+			company,
+			company_link,
+			date,
+			description,
+			id,
+			insights,
+			job_type,
+			link,
+			title,
+			expired,
+		} = data.job_records[0];
 
 
 
-	const cachedData = cacheAndSyncData('myCachedData', link);
-	return (
-		<Paper elevation={3}>
-			{' '}
-			<JobInfo>
-				<div>
-					<Stack direction="row" spacing={1}>
-						<Typography variant="h4">{title}</Typography>
-						<Chip label={job_type} color="primary" />
-						{(expired) && <Chip label="Expirada" color="error" />}
-					</Stack>
-				</div>
-				<div>
-					<Stack direction="row" spacing={2}>
-						<Typography variant="h5">Empresa: {company}</Typography>
+		return (
+			<Paper elevation={3}>
+				{' '}
+				<JobInfo>
+					<div>
+						<Stack direction="row" spacing={1}>
+							<Typography variant="h4">{title}</Typography>
+							<Chip label={job_type} color="primary" />
+							{(expired) && <Chip label="Expirada" color="error" />}
+						</Stack>
+					</div>
+					<div>
+						<Stack direction="row" spacing={2}>
+							<Typography variant="h5">Empresa: {company}</Typography>
 
-						<Button variant="contained" color="error">
-							Bloquear empresa
-						</Button>
-					</Stack>
-				</div>
-				<DisplayJob>
-					{' '}
-					<TextInfo>
-						{' '}
-						<Description>
-							<strong>Descrição :</strong> <br /> <Description> {description}</Description>
-						</Description>
-					</TextInfo>
-					<OptionsGroup>
-						<div>
-							<Typography variant="h5">Keywords: </Typography>
-							<TechTags description={description} /></div>
-						<Stack direction="column" spacing={3}>
-							<Button
-								variant="contained"
-								onClick={() => {
-									acessJob();
-								}}
-								color="primary"
-								fullWidth
-							>
-								Acessar vaga
-							</Button>
-
-							<Button variant="contained" onClick={async () => { await applyJob() }} color="success" fullWidth>
-								Vaga aplicada
-							</Button>
-							<Button variant="contained" onClick={async () => { await invalidateJob() }} color="error" fullWidth>
-								Remover vaga
+							<Button variant="contained" color="error">
+								Bloquear empresa
 							</Button>
 						</Stack>
-					</OptionsGroup>
-				</DisplayJob>
-			</JobInfo>{' '}
-		</Paper>
-	);
+					</div>
+					<DisplayJob>
+						{' '}
+						<TextInfo>
+							{' '}
+							<Description>
+								<strong>Descrição :</strong> <br /> <Description> {description}</Description>
+							</Description>
+						</TextInfo>
+						<OptionsGroup>
+							<div>
+								<Typography variant="h5">Keywords: </Typography>
+								<TechTags description={description} /></div>
+							<Stack direction="column" spacing={3}>
+								<Button
+									variant="contained"
+									onClick={() => {
+										acessJob();
+									}}
+									color="primary"
+									fullWidth
+								>
+									Acessar vaga
+								</Button>
+
+								<Button variant="contained" onClick={async () => { await applyJob() }} color="success" fullWidth>
+									Vaga aplicada
+								</Button>
+								<Button variant="contained" onClick={async () => { await invalidateJob() }} color="error" fullWidth>
+									Remover vaga
+								</Button>
+							</Stack>
+						</OptionsGroup>
+					</DisplayJob>
+				</JobInfo>{' '}
+				<CustomSnack snackBarStatus={openSnack} type="error" message="asdasdasd" />
+			</Paper>
+		);
+	}
+
+	return (
+		<div>Não temos mais resultados de busca</div>
+	)
 }
 
 export default JobsInfo;
