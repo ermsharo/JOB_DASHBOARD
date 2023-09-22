@@ -96,6 +96,7 @@ function JobsInfo({ data }: { data: any }) {
 
 
 		console.log("Size here ", data.job_records.length)
+		console.log("Data")
 		const {
 			apply,
 			company,
@@ -114,8 +115,9 @@ function JobsInfo({ data }: { data: any }) {
 
 		return (
 			<Paper elevation={3}>
-				{' '}
+
 				<JobInfo>
+					<Typography variant="h6"> Faltam {data.total_pages}</Typography>
 					<div>
 						<Stack direction="row" spacing={1}>
 							<Typography variant="h4">{title}</Typography>

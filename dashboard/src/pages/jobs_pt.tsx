@@ -1,6 +1,5 @@
 
 import styled from "styled-components";
-import { Button, Paper, Stack, Typography } from "@mui/material";
 import Header from "./../components/header";
 import JobsInfo from "../components/JobInfo";
 import JobsDisplay from "../components/JobsDisplay"
@@ -19,7 +18,19 @@ margin: auto;
 
 
 
+
+
 function JobsInfo_pt() {
+
+    //Vamos modificar as coisas aqui usando o use context
+    
+    //Vou precisar dos seguinte parametros
+
+    //Page
+
+    //Language
+
+    //Easy apply
 
     return (
         <><Header />
