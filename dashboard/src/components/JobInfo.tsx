@@ -36,19 +36,7 @@ function JobsInfo({ data }: { data: any }) {
 
 
 	const [openSnack, setOpenSnack] = useState(false);
-	// const {
-	// 	apply,
-	// 	company,
-	// 	company_link,
-	// 	date,
-	// 	description,
-	// 	id,
-	// 	insights,
-	// 	job_type,
-	// 	link,
-	// 	title,
-	// 	expired,
-	// } = data.job_records[0];
+
 
 
 

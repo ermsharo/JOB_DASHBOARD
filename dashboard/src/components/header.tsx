@@ -6,11 +6,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import AdbIcon from '@mui/icons-material/Adb';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-const pages = [
-    { name: 'jobs 🇧🇷', path: "/pt" }
-    , { name: 'jobs 🇺🇲', path: "/en" },
-    { name: 'all jobs', path: "/all" }];
+import { useMyContext } from '../context/Context';
+
 
 
 const Links = styled.div`
@@ -25,46 +22,64 @@ a{
 `
 
 
+
+
 function ResponsiveAppBar() {
+
+
+    const { setNavigation, setLanguage, setPerPage, setPage } = useMyContext();
+
+    const goToJOBS_PT = () => {
+        setNavigation("JOBS_PT");
+        setLanguage("pt");
+        setPerPage(1);
+        setPage(1);
+
+    }
+    const goToJOBS_EN = () => {
+        setNavigation("JOBS_EN");
+        setLanguage("en");
+        setPerPage(1);
+        setPage(1);
+    }
+    const goToJOBS_LIST_PT = () => {
+        setNavigation("JOBS_LIST_PT");
+        setLanguage("pt");
+        setPerPage(20);
+        setPage(1);
+    }
+    const goToJOBS_LIST_EN = () => {
+        setNavigation("JOBS_LIST_EN");
+        setLanguage("en");
+        setPerPage(20);
+        setPage(1);
+    }
+
+
+    const pages = [
+        { name: 'jobs 🇧🇷', run: goToJOBS_PT }
+        , { name: 'jobs 🇺🇲', run: goToJOBS_EN },
+        { name: 'all jobs 🇧🇷', run: goToJOBS_LIST_PT },
+        { name: 'all jobs 🇺🇲', run: goToJOBS_LIST_EN }];
+
 
 
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        HOME
-                    </Typography>
-
-
-
                     {pages.map((page) => (
-                        <Links key={page.name} >
+                        <Links key={page.name} onClick={page.run}>
 
-                            <Link to={page.path}>
 
-                                <Typography
-                                    variant="h6"
 
-                                >       {page.name}
-                                </Typography>
+                            <Typography
+                                variant="h6"
 
-                            </Link>
+                            >       {page.name}
+                            </Typography>
+
+
                         </Links>
                     ))}
 

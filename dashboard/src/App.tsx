@@ -1,13 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-import DisplayJob from "./components/DisplayJob"
-import Header from "./components/header"
-import JobsData from './dataServices/jobsData_pt'
+import { useMyContext } from './context/Context';
+import Header from "./components/header";
 
 
 const DashboardBox = styled.div`
@@ -21,11 +15,23 @@ padding-top: 3rem;
 `
 
 function App() {
-  const [count, setCount] = useState(0)
+
+
+  const {navigation} = useMyContext();
+
+
+  
+
+ const returnNavigation = () =>{
+
+ }
 
   return (
     <>
-     
+     <Header/>
+     {navigation}
+
+
   
 
     </>
